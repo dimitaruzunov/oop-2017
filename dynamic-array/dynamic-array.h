@@ -3,32 +3,44 @@
 
 class DynamicArray {
   int* array;
-  unsigned size;
-  unsigned capacity;
+  int size;
+  int capacity;
+
+  static const int INITIAL_CAPACITY;
 
   void resize();
+
+  void copy(const DynamicArray& other);
+
+  void erase();
 
 public:
 
   DynamicArray();
 
+  DynamicArray(const int array[], int elementsCount);
+
+  DynamicArray(const DynamicArray& other);
+
+  DynamicArray& operator=(const DynamicArray& other);
+
   ~DynamicArray();
 
-  unsigned getSize() const;
+  int getSize() const;
 
   bool isEmpty() const;
 
-  int get(unsigned index) const;
+  int get(int index) const;
 
-  void set(unsigned index, int newValue);
+  void set(int index, int newValue);
 
   void push(int element);
 
   int pop();
 
-  void insertAt(unsigned index, int element);
+  void insertAt(int index, int element);
 
-  int removeAt(unsigned index);
+  int removeAt(int index);
 
   void print() const;
 };

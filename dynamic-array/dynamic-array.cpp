@@ -1,19 +1,43 @@
+#include <algorithm>
 #include <iostream>
 #include "dynamic-array.h"
 
+using std::max;
 using std::cout;
 
-DynamicArray::DynamicArray() {
-  size = 0;
-  capacity = 8;
-  array = new int[capacity];
+const int DynamicArray::INITIAL_CAPACITY = 8;
+
+DynamicArray::DynamicArray()
+  : size(0), capacity(INITIAL_CAPACITY), array(new int[capacity]) {}
+
+DynamicArray::DynamicArray(const int array[], int elementsCount) {
+  size = elementsCount;
+  capacity = max(size, INITIAL_CAPACITY);
+  this->array = new int[capacity];
+
+  for (int i = 0; i < size; ++i) {
+    this->array[i] = array[i];
+  }
+}
+
+DynamicArray::DynamicArray(const DynamicArray& other) {
+  copy(other);
+}
+
+DynamicArray& DynamicArray::operator=(const DynamicArray& other) {
+  if (this != &other) {
+    erase();
+    copy(other);
+  }
+
+  return *this;
 }
 
 DynamicArray::~DynamicArray() {
-  delete[] array;
+  erase();
 }
 
-unsigned DynamicArray::getSize() const {
+int DynamicArray::getSize() const {
   return size;
 }
 
@@ -21,11 +45,11 @@ bool DynamicArray::isEmpty() const {
   return size == 0;
 }
 
-int DynamicArray::get(unsigned index) const {
+int DynamicArray::get(int index) const {
   return array[index];
 }
 
-void DynamicArray::set(unsigned index, int newValue) {
+void DynamicArray::set(int index, int newValue) {
   array[index] = newValue;
 }
 
@@ -37,12 +61,12 @@ int DynamicArray::pop() {
   return removeAt(size - 1);
 }
 
-void DynamicArray::insertAt(unsigned index, int element) {
+void DynamicArray::insertAt(int index, int element) {
   if (size == capacity) {
     resize();
   }
 
-  for (unsigned i = size; i > index; --i) {
+  for (int i = size; i > index; --i) {
     array[i] = array[i - 1];
   }
 
@@ -51,10 +75,10 @@ void DynamicArray::insertAt(unsigned index, int element) {
   ++size;
 }
 
-int DynamicArray::removeAt(unsigned index) {
+int DynamicArray::removeAt(int index) {
   int removedElement = array[index];
 
-  for (unsigned i = index; i < size - 1; ++i) {
+  for (int i = index; i < size - 1; ++i) {
     array[i] = array[i + 1];
   }
 
@@ -64,7 +88,7 @@ int DynamicArray::removeAt(unsigned index) {
 }
 
 void DynamicArray::print() const {
-  for (unsigned i = 0; i < size - 1; ++i) {
+  for (int i = 0; i < size - 1; ++i) {
     cout << array[i] << ", ";
   }
   cout << array[size - 1] << '\n';
@@ -82,4 +106,18 @@ void DynamicArray::resize() {
   delete[] array;
 
   array = newArray;
+}
+
+void DynamicArray::copy(const DynamicArray& other) {
+  size = other.size;
+  capacity = other.capacity;
+  array = new int[capacity];
+
+  for (int i = 0; i < size; ++i) {
+    array[i] = other.array[i];
+  }
+}
+
+void DynamicArray::erase() {
+  delete[] array;
 }
