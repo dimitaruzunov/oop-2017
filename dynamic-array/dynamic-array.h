@@ -1,8 +1,9 @@
 #ifndef DYNAMIC_ARRAY_H
 #define DYNAMIC_ARRAY_H
 
+template <typename T>
 class DynamicArray {
-  int* array;
+  T* array;
   int size;
   int capacity;
 
@@ -18,7 +19,9 @@ public:
 
   DynamicArray();
 
-  DynamicArray(const int array[], int elementsCount);
+  DynamicArray(const T array[], int elementsCount);
+
+  DynamicArray(int capacity);
 
   DynamicArray(const DynamicArray& other);
 
@@ -30,17 +33,17 @@ public:
 
   bool isEmpty() const;
 
-  int get(int index) const;
+  const T& get(int index) const;
 
-  void set(int index, int newValue);
+  void set(int index, const T& newValue);
 
-  void push(int element);
+  void push(const T& element);
 
-  int pop();
+  T pop();
 
-  void insertAt(int index, int element);
+  void insertAt(int index, const T& element);
 
-  int removeAt(int index);
+  T removeAt(int index);
 
   void print() const;
 };

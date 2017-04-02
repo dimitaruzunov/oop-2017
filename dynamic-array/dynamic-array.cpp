@@ -5,26 +5,35 @@
 using std::max;
 using std::cout;
 
-const int DynamicArray::INITIAL_CAPACITY = 8;
+template <typename T>
+const int DynamicArray<T>::INITIAL_CAPACITY = 8;
 
-DynamicArray::DynamicArray()
-  : size(0), capacity(INITIAL_CAPACITY), array(new int[capacity]) {}
+template <typename T>
+DynamicArray<T>::DynamicArray()
+  : size(0), capacity(INITIAL_CAPACITY), array(new T[capacity]) {}
 
-DynamicArray::DynamicArray(const int array[], int elementsCount) {
+template <typename T>
+DynamicArray<T>::DynamicArray(const T array[], int elementsCount) {
   size = elementsCount;
   capacity = max(size, INITIAL_CAPACITY);
-  this->array = new int[capacity];
+  this->array = new T[capacity];
 
   for (int i = 0; i < size; ++i) {
     this->array[i] = array[i];
   }
 }
 
-DynamicArray::DynamicArray(const DynamicArray& other) {
+template <typename T>
+DynamicArray<T>::DynamicArray(int capacity)
+  : size(0), capacity(capacity), array(new T[capacity]) {}
+
+template <typename T>
+DynamicArray<T>::DynamicArray(const DynamicArray& other) {
   copy(other);
 }
 
-DynamicArray& DynamicArray::operator=(const DynamicArray& other) {
+template <typename T>
+DynamicArray<T>& DynamicArray<T>::operator=(const DynamicArray& other) {
   if (this != &other) {
     erase();
     copy(other);
@@ -33,35 +42,43 @@ DynamicArray& DynamicArray::operator=(const DynamicArray& other) {
   return *this;
 }
 
-DynamicArray::~DynamicArray() {
+template <typename T>
+DynamicArray<T>::~DynamicArray() {
   erase();
 }
 
-int DynamicArray::getSize() const {
+template <typename T>
+int DynamicArray<T>::getSize() const {
   return size;
 }
 
-bool DynamicArray::isEmpty() const {
+template <typename T>
+bool DynamicArray<T>::isEmpty() const {
   return size == 0;
 }
 
-int DynamicArray::get(int index) const {
+template <typename T>
+const T& DynamicArray<T>::get(int index) const {
   return array[index];
 }
 
-void DynamicArray::set(int index, int newValue) {
+template <typename T>
+void DynamicArray<T>::set(int index, const T& newValue) {
   array[index] = newValue;
 }
 
-void DynamicArray::push(int element) {
+template <typename T>
+void DynamicArray<T>::push(const T& element) {
   insertAt(size, element);
 }
 
-int DynamicArray::pop() {
+template <typename T>
+T DynamicArray<T>::pop() {
   return removeAt(size - 1);
 }
 
-void DynamicArray::insertAt(int index, int element) {
+template <typename T>
+void DynamicArray<T>::insertAt(int index, const T& element) {
   if (size == capacity) {
     resize();
   }
@@ -75,8 +92,9 @@ void DynamicArray::insertAt(int index, int element) {
   ++size;
 }
 
-int DynamicArray::removeAt(int index) {
-  int removedElement = array[index];
+template <typename T>
+T DynamicArray<T>::removeAt(int index) {
+  T removedElement = array[index];
 
   for (int i = index; i < size - 1; ++i) {
     array[i] = array[i + 1];
@@ -87,17 +105,21 @@ int DynamicArray::removeAt(int index) {
   return removedElement;
 }
 
-void DynamicArray::print() const {
+template <typename T>
+void DynamicArray<T>::print() const {
+  if (isEmpty()) return;
+
   for (int i = 0; i < size - 1; ++i) {
     cout << array[i] << ", ";
   }
   cout << array[size - 1] << '\n';
 }
 
-void DynamicArray::resize() {
+template <typename T>
+void DynamicArray<T>::resize() {
   capacity *= 2;
 
-  int* newArray = new int[capacity];
+  T* newArray = new T[capacity];
 
   for (int i = 0; i < size; ++i) {
     newArray[i] = array[i];
@@ -108,16 +130,18 @@ void DynamicArray::resize() {
   array = newArray;
 }
 
-void DynamicArray::copy(const DynamicArray& other) {
+template <typename T>
+void DynamicArray<T>::copy(const DynamicArray& other) {
   size = other.size;
   capacity = other.capacity;
-  array = new int[capacity];
+  array = new T[capacity];
 
   for (int i = 0; i < size; ++i) {
     array[i] = other.array[i];
   }
 }
 
-void DynamicArray::erase() {
+template <typename T>
+void DynamicArray<T>::erase() {
   delete[] array;
 }

@@ -5,7 +5,7 @@ using std::cout;
 using std::boolalpha;
 
 void testBasicOperations() {
-  DynamicArray numbers;
+  DynamicArray<int> numbers;
   cout << boolalpha << numbers.isEmpty() << '\n'; // true
 
   numbers.push(1);
@@ -31,16 +31,16 @@ void testBasicOperations() {
 
 void testArrayConstructor() {
   int arrayOfNumbers[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-  DynamicArray numbers(arrayOfNumbers, 10);
+  DynamicArray<int> numbers(arrayOfNumbers, 10);
 
   numbers.print();
 }
 
 void testCopyConstructor() {
   int arrayOfNumbers[] = {1, 2, 3, 4, 5};
-  DynamicArray numbers(arrayOfNumbers, 5);
+  DynamicArray<int> numbers(arrayOfNumbers, 5);
 
-  DynamicArray otherNumbers = numbers;
+  DynamicArray<int> otherNumbers = numbers;
   otherNumbers.print();
   otherNumbers.push(6);
   otherNumbers.print();
@@ -52,11 +52,21 @@ void testCopyConstructor() {
   otherNumbers.print();
 }
 
+void testTypeConversionConstructor() {
+  DynamicArray<int> numbers = 30;
+
+  for (int i = 1; i <= 15; ++i) {
+    numbers.push(i);
+  }
+
+  numbers.print();
+}
+
 void testAssignmentOperator() {
   int arrayOfNumbers[] = {1, 2, 3, 4, 5};
-  DynamicArray numbers(arrayOfNumbers, 5);
+  DynamicArray<int> numbers(arrayOfNumbers, 5);
 
-  DynamicArray otherNumbers;
+  DynamicArray<int> otherNumbers;
   otherNumbers.push(1);
   otherNumbers.print();
 
@@ -72,11 +82,51 @@ void testAssignmentOperator() {
   otherNumbers.print();
 }
 
+void testArrayOfObjects() {
+  int arrayOfNumbers[] = {1, 2, 3, 4, 5};
+
+  DynamicArray<int> dynamicArrays[] = {
+    DynamicArray<int>(),
+    DynamicArray<int>(arrayOfNumbers, 5),
+    5
+  };
+
+  for (int i = 0; i < 3; ++i) {
+    dynamicArrays[i].print();
+  }
+}
+
+void testDynamicallyAllocatedObjects() {
+  int arrayOfNumbers[] = {1, 2, 3, 4, 5};
+  DynamicArray<int>* numbers = new DynamicArray<int>(arrayOfNumbers, 5);
+  numbers->print();
+
+  DynamicArray<int>* dynamicArraysOfNumbers = new DynamicArray<int>[3];
+  for (int i = 0; i < 3; ++i) {
+    for (int j = 0; j <= i; ++j) {
+      dynamicArraysOfNumbers[i].push(j);
+    }
+    dynamicArraysOfNumbers[i].print();
+  }
+
+  delete numbers;
+  delete[] dynamicArraysOfNumbers;
+}
+
+void testTemporaryObjects() {
+  int arrayOfNumbers[] = {1, 2, 3, 4, 5};
+  DynamicArray<int>(arrayOfNumbers, 5).print();
+}
+
 int main() {
   testBasicOperations();
   testArrayConstructor();
   testCopyConstructor();
   testAssignmentOperator();
+  testTypeConversionConstructor();
+  testArrayOfObjects();
+  testDynamicallyAllocatedObjects();
+  testTemporaryObjects();
 
   return 0;
 }
