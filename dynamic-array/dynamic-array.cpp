@@ -93,7 +93,6 @@ void DynamicArray<T>::insertAt(int index, const T& element) {
   }
 
   array[index] = element;
-
   ++size;
 }
 
@@ -137,28 +136,27 @@ DynamicArray<T> DynamicArray<T>::operator+(const DynamicArray& other) {
 
 template <typename T>
 void DynamicArray<T>::resize() {
-  capacity *= 2;
-
-  T* newArray = new T[capacity];
+  T* oldArray = array;
+  array = new T[capacity * 2];
 
   for (int i = 0; i < size; ++i) {
-    newArray[i] = array[i];
+    array[i] = oldArray[i];
   }
+  delete[] oldArray;
 
-  delete[] array;
-
-  array = newArray;
+  capacity *= 2;
 }
 
 template <typename T>
 void DynamicArray<T>::copy(const DynamicArray& other) {
-  size = other.size;
-  capacity = other.capacity;
-  array = new T[capacity];
+  array = new T[other.capacity];
 
-  for (int i = 0; i < size; ++i) {
+  for (int i = 0; i < other.size; ++i) {
     array[i] = other.array[i];
   }
+
+  size = other.size;
+  capacity = other.capacity;
 }
 
 template <typename T>
