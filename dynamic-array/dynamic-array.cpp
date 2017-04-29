@@ -10,18 +10,18 @@ const int DynamicArray<T>::INITIAL_CAPACITY = 8;
 
 template <typename T>
 DynamicArray<T>::DynamicArray() {
-  array = new T[INITIAL_CAPACITY];
+  elements = new T[INITIAL_CAPACITY];
   size = 0;
   capacity = INITIAL_CAPACITY;
 }
 
 template <typename T>
-DynamicArray<T>::DynamicArray(const T array[], int elementsCount) {
+DynamicArray<T>::DynamicArray(const T elements[], int elementsCount) {
   int initialCapacity = max(size, INITIAL_CAPACITY);
-  this->array = new T[initialCapacity];
+  this->elements = new T[initialCapacity];
 
   for (int i = 0; i < elementsCount; ++i) {
-    this->array[i] = array[i];
+    this->elements[i] = elements[i];
   }
 
   size = elementsCount;
@@ -30,7 +30,7 @@ DynamicArray<T>::DynamicArray(const T array[], int elementsCount) {
 
 template <typename T>
 DynamicArray<T>::DynamicArray(int capacity) {
-  array = new T[capacity];
+  elements = new T[capacity];
   size = 0;
   this->capacity = capacity;
 }
@@ -67,7 +67,7 @@ bool DynamicArray<T>::isEmpty() const {
 
 template <typename T>
 const T& DynamicArray<T>::get(int index) const {
-  return array[index];
+  return elements[index];
 }
 
 template <typename T>
@@ -78,7 +78,7 @@ const T& DynamicArray<T>::operator[](int index) const {
 template <typename T>
 bool DynamicArray<T>::includes(const T& element) const {
   for (int i = 0; i < size; ++i) {
-    if (array[i] == element) {
+    if (elements[i] == element) {
       return true;
     }
   }
@@ -88,7 +88,7 @@ bool DynamicArray<T>::includes(const T& element) const {
 
 template <typename T>
 void DynamicArray<T>::set(int index, const T& newValue) {
-  array[index] = newValue;
+  elements[index] = newValue;
 }
 
 template <typename T>
@@ -108,19 +108,19 @@ void DynamicArray<T>::insertAt(int index, const T& element) {
   }
 
   for (int i = size; i > index; --i) {
-    array[i] = array[i - 1];
+    elements[i] = elements[i - 1];
   }
 
-  array[index] = element;
+  elements[index] = element;
   ++size;
 }
 
 template <typename T>
 T DynamicArray<T>::removeAt(int index) {
-  T removedElement = array[index];
+  T removedElement = elements[index];
 
   for (int i = index; i < size - 1; ++i) {
-    array[i] = array[i + 1];
+    elements[i] = elements[i + 1];
   }
 
   --size;
@@ -153,8 +153,8 @@ DynamicArray<T> DynamicArray<T>::operator-(const DynamicArray& other) {
   DynamicArray<T> result;
 
   for (int i = 0; i < size; ++i) {
-    if (!other.includes(array[i])) {
-      result.push(array[i]);
+    if (!other.includes(elements[i])) {
+      result.push(elements[i]);
     }
   }
 
@@ -167,9 +167,9 @@ void DynamicArray<T>::print() const {
 
   if (!isEmpty()) {
     for (int i = 0; i < size - 1; ++i) {
-      cout << array[i] << ", ";
+      cout << elements[i] << ", ";
     }
-    cout << array[size - 1];
+    cout << elements[size - 1];
   }
 
   cout << "]\n";
@@ -177,10 +177,10 @@ void DynamicArray<T>::print() const {
 
 template <typename T>
 void DynamicArray<T>::copy(const DynamicArray& other) {
-  array = new T[other.capacity];
+  elements = new T[other.capacity];
 
   for (int i = 0; i < other.size; ++i) {
-    array[i] = other.array[i];
+    elements[i] = other.elements[i];
   }
 
   size = other.size;
@@ -189,18 +189,18 @@ void DynamicArray<T>::copy(const DynamicArray& other) {
 
 template <typename T>
 void DynamicArray<T>::erase() {
-  delete[] array;
+  delete[] elements;
 }
 
 template <typename T>
 void DynamicArray<T>::resize() {
-  T* oldArray = array;
-  array = new T[capacity * 2];
+  T* oldElements = elements;
+  elements = new T[capacity * 2];
 
   for (int i = 0; i < size; ++i) {
-    array[i] = oldArray[i];
+    elements[i] = oldElements[i];
   }
-  delete[] oldArray;
+  delete[] oldElements;
 
   capacity *= 2;
 }

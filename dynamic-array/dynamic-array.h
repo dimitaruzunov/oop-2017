@@ -3,7 +3,7 @@
 
 template <typename T>
 class DynamicArray {
-  T* array;
+  T* elements;
   int size;
   int capacity;
 
@@ -16,7 +16,7 @@ class DynamicArray {
 public:
 
   DynamicArray();
-  DynamicArray(const T array[], int elementsCount);
+  DynamicArray(const T elements[], int elementsCount);
   DynamicArray(int capacity);
   DynamicArray(const DynamicArray& other);
   ~DynamicArray();
