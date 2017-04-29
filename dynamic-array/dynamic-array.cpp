@@ -41,6 +41,11 @@ DynamicArray<T>::DynamicArray(const DynamicArray& other) {
 }
 
 template <typename T>
+DynamicArray<T>::~DynamicArray() {
+  erase();
+}
+
+template <typename T>
 DynamicArray<T>& DynamicArray<T>::operator=(const DynamicArray& other) {
   if (this != &other) {
     erase();
@@ -48,11 +53,6 @@ DynamicArray<T>& DynamicArray<T>::operator=(const DynamicArray& other) {
   }
 
   return *this;
-}
-
-template <typename T>
-DynamicArray<T>::~DynamicArray() {
-  erase();
 }
 
 template <typename T>
@@ -118,16 +118,6 @@ T DynamicArray<T>::removeAt(int index) {
 }
 
 template <typename T>
-void DynamicArray<T>::print() const {
-  if (isEmpty()) return;
-
-  for (int i = 0; i < size - 1; ++i) {
-    cout << array[i] << ", ";
-  }
-  cout << array[size - 1] << '\n';
-}
-
-template <typename T>
 DynamicArray<T>& DynamicArray<T>::operator+=(const DynamicArray& other) {
   for (int i = 0; i < other.size; ++i) {
     push(other[i]);
@@ -143,16 +133,17 @@ DynamicArray<T> DynamicArray<T>::operator+(const DynamicArray& other) {
 }
 
 template <typename T>
-void DynamicArray<T>::resize() {
-  T* oldArray = array;
-  array = new T[capacity * 2];
+void DynamicArray<T>::print() const {
+  cout << '[';
 
-  for (int i = 0; i < size; ++i) {
-    array[i] = oldArray[i];
+  if (!isEmpty()) {
+    for (int i = 0; i < size - 1; ++i) {
+      cout << array[i] << ", ";
+    }
+    cout << array[size - 1];
   }
-  delete[] oldArray;
 
-  capacity *= 2;
+  cout << "]\n";
 }
 
 template <typename T>
@@ -170,4 +161,17 @@ void DynamicArray<T>::copy(const DynamicArray& other) {
 template <typename T>
 void DynamicArray<T>::erase() {
   delete[] array;
+}
+
+template <typename T>
+void DynamicArray<T>::resize() {
+  T* oldArray = array;
+  array = new T[capacity * 2];
+
+  for (int i = 0; i < size; ++i) {
+    array[i] = oldArray[i];
+  }
+  delete[] oldArray;
+
+  capacity *= 2;
 }
