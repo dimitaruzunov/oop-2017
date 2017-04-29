@@ -9,23 +9,31 @@ template <typename T>
 const int DynamicArray<T>::INITIAL_CAPACITY = 8;
 
 template <typename T>
-DynamicArray<T>::DynamicArray()
-  : size(0), capacity(INITIAL_CAPACITY), array(new T[capacity]) {}
-
-template <typename T>
-DynamicArray<T>::DynamicArray(const T array[], int elementsCount) {
-  size = elementsCount;
-  capacity = max(size, INITIAL_CAPACITY);
-  this->array = new T[capacity];
-
-  for (int i = 0; i < size; ++i) {
-    this->array[i] = array[i];
-  }
+DynamicArray<T>::DynamicArray() {
+  array = new T[INITIAL_CAPACITY];
+  size = 0;
+  capacity = INITIAL_CAPACITY;
 }
 
 template <typename T>
-DynamicArray<T>::DynamicArray(int capacity)
-  : size(0), capacity(capacity), array(new T[capacity]) {}
+DynamicArray<T>::DynamicArray(const T array[], int elementsCount) {
+  int initialCapacity = max(size, INITIAL_CAPACITY);
+  this->array = new T[initialCapacity];
+
+  for (int i = 0; i < elementsCount; ++i) {
+    this->array[i] = array[i];
+  }
+
+  size = elementsCount;
+  capacity = initialCapacity;
+}
+
+template <typename T>
+DynamicArray<T>::DynamicArray(int capacity) {
+  array = new T[capacity];
+  size = 0;
+  this->capacity = capacity;
+}
 
 template <typename T>
 DynamicArray<T>::DynamicArray(const DynamicArray& other) {
