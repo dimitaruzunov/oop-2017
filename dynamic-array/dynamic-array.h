@@ -35,6 +35,8 @@ public:
 
   const T& get(int index) const;
 
+  const T& operator[](int index) const;
+
   void set(int index, const T& newValue);
 
   void push(const T& element);
@@ -46,6 +48,10 @@ public:
   T removeAt(int index);
 
   void print() const;
+
+  DynamicArray& operator+=(const DynamicArray& other);
+
+  DynamicArray operator+(const DynamicArray& other);
 };
 
 #endif

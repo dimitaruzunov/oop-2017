@@ -118,6 +118,24 @@ void testTemporaryObjects() {
   DynamicArray<int>(arrayOfNumbers, 5).print();
 }
 
+void testOperators() {
+  int firstArrayOfNumbers[] = {1, 2, 3, 4, 5};
+  DynamicArray<int> firstNumbers(firstArrayOfNumbers, 5);
+
+  int secondArrayOfNumbers[] = {6, 7, 8, 9, 10};
+  DynamicArray<int> secondNumbers(secondArrayOfNumbers, 5);
+
+  (firstNumbers + secondNumbers).print();
+  firstNumbers.print();
+  secondNumbers.print();
+
+  firstNumbers += secondNumbers;
+  firstNumbers.print();
+  secondNumbers.print();
+
+  cout << firstNumbers[2] << '\n';
+}
+
 int main() {
   testBasicOperations();
   testArrayConstructor();
@@ -127,6 +145,7 @@ int main() {
   testArrayOfObjects();
   testDynamicallyAllocatedObjects();
   testTemporaryObjects();
+  testOperators();
 
   return 0;
 }

@@ -63,6 +63,11 @@ const T& DynamicArray<T>::get(int index) const {
 }
 
 template <typename T>
+const T& DynamicArray<T>::operator[](int index) const {
+  return get(index);
+}
+
+template <typename T>
 void DynamicArray<T>::set(int index, const T& newValue) {
   array[index] = newValue;
 }
@@ -113,6 +118,21 @@ void DynamicArray<T>::print() const {
     cout << array[i] << ", ";
   }
   cout << array[size - 1] << '\n';
+}
+
+template <typename T>
+DynamicArray<T>& DynamicArray<T>::operator+=(const DynamicArray& other) {
+  for (int i = 0; i < other.size; ++i) {
+    push(other[i]);
+  }
+
+  return *this;
+}
+
+template <typename T>
+DynamicArray<T> DynamicArray<T>::operator+(const DynamicArray& other) {
+  DynamicArray<T> result = *this;
+  return result += other;
 }
 
 template <typename T>
