@@ -76,6 +76,17 @@ const T& DynamicArray<T>::operator[](int index) const {
 }
 
 template <typename T>
+bool DynamicArray<T>::includes(const T& element) const {
+  for (int i = 0; i < size; ++i) {
+    if (array[i] == element) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+template <typename T>
 void DynamicArray<T>::set(int index, const T& newValue) {
   array[index] = newValue;
 }
@@ -130,6 +141,24 @@ template <typename T>
 DynamicArray<T> DynamicArray<T>::operator+(const DynamicArray& other) {
   DynamicArray<T> result = *this;
   return result += other;
+}
+
+template <typename T>
+DynamicArray<T>& DynamicArray<T>::operator-=(const DynamicArray& other) {
+  return *this = *this - other;
+}
+
+template <typename T>
+DynamicArray<T> DynamicArray<T>::operator-(const DynamicArray& other) {
+  DynamicArray<T> result;
+
+  for (int i = 0; i < size; ++i) {
+    if (!other.includes(array[i])) {
+      result.push(array[i]);
+    }
+  }
+
+  return result;
 }
 
 template <typename T>

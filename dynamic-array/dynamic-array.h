@@ -27,6 +27,7 @@ public:
   bool isEmpty() const;
   const T& get(int index) const;
   const T& operator[](int index) const;
+  bool includes(const T& element) const;
 
   void set(int index, const T& newValue);
   void push(const T& element);
@@ -36,6 +37,8 @@ public:
 
   DynamicArray& operator+=(const DynamicArray& other);
   DynamicArray operator+(const DynamicArray& other);
+  DynamicArray& operator-=(const DynamicArray& other);
+  DynamicArray operator-(const DynamicArray& other);
 
   void print() const;
 };

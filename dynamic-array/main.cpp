@@ -125,6 +125,8 @@ void testOperators() {
   int secondArrayOfNumbers[] = {6, 7, 8, 9, 10};
   DynamicArray<int> secondNumbers(secondArrayOfNumbers, 5);
 
+  cout << firstNumbers[2] << '\n';
+
   (firstNumbers + secondNumbers).print();
   firstNumbers.print();
   secondNumbers.print();
@@ -133,7 +135,9 @@ void testOperators() {
   firstNumbers.print();
   secondNumbers.print();
 
-  cout << firstNumbers[2] << '\n';
+  (firstNumbers - secondNumbers).print();
+  (firstNumbers -= secondNumbers).print();
+  secondNumbers.print();
 }
 
 int main() {
