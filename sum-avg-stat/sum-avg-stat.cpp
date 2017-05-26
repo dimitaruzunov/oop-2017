@@ -14,10 +14,7 @@ SumAvgStat& SumAvgStat::operator+=(int number) {
 }
 
 SumAvgStat& SumAvgStat::operator-=(int number) {
-  sum -= number;
-  ++numbersCount;
-
-  return *this;
+  return *this += -number;
 }
 
 SumAvgStat& SumAvgStat::operator+=(const SumAvgStat& other) {
