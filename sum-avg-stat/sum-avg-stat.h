@@ -1,6 +1,11 @@
 #ifndef SUM_AVG_STAT_H
 #define SUM_AVG_STAT_H
 
+#include <iostream>
+
+using std::ostream;
+using std::istream;
+
 class SumAvgStat {
   int sum;
   int numbersCount;
@@ -17,5 +22,8 @@ public:
   int count() const;
   double avg() const;
 };
+
+ostream& operator<<(ostream& os, const SumAvgStat& sas);
+istream& operator>>(istream& is, SumAvgStat& sas);
 
 #endif

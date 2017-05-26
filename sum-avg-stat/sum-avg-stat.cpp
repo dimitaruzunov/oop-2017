@@ -31,3 +31,22 @@ int SumAvgStat::count() const {
 double SumAvgStat::avg() const {
   return (double) sum / numbersCount;
 }
+
+ostream& operator<<(ostream& os, const SumAvgStat& sas) {
+  return os << "Sum: " << *sas
+            << "\nAvg: " << sas.avg()
+            << "\nNumbers count: " << sas.count() << '\n';
+}
+
+istream& operator>>(istream& is, SumAvgStat& sas) {
+  int numbersCount;
+  is >> numbersCount;
+
+  for (int i = 0; i < numbersCount; ++i) {
+    int number;
+    is >> number;
+    sas += number;
+  }
+
+  return is;
+}
